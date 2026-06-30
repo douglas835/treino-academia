@@ -1,0 +1,215 @@
+/* styles.css — tema athletic escuro, mobile-first */
+:root {
+  --bg:        oklch(16% 0.015 265);
+  --surface:   oklch(21% 0.02 265);
+  --surface-2: oklch(26% 0.022 265);
+  --line:      oklch(34% 0.02 265);
+  --text:      oklch(97% 0 0);
+  --muted:     oklch(72% 0.012 265);
+  --accent:    oklch(83% 0.19 130);   /* verde-limão energético */
+  --accent-ink:oklch(22% 0.08 130);
+  --up:        oklch(78% 0.17 55);     /* laranja = subir carga */
+  --done:      oklch(80% 0.18 150);
+
+  --radius: 18px;
+  --radius-sm: 12px;
+  --space: clamp(1rem, 0.6rem + 1.5vw, 1.6rem);
+  --fast: 140ms;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --font-disp: "Archivo", system-ui, sans-serif;
+  --font: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+  padding-bottom: 96px;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+input { font: inherit; }
+
+/* ---------- topo / abas ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 30;
+  background: color-mix(in oklab, var(--bg) 86%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  padding: 0.7rem var(--space) 0;
+}
+.brand {
+  display: flex; align-items: center; gap: 0.55rem;
+  font-family: var(--font-disp); font-weight: 800; letter-spacing: -0.02em;
+  font-size: 1.15rem;
+}
+.brand .dot {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 16px var(--accent);
+}
+.brand .streak { margin-left: auto; font-family: var(--font); font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+.brand .streak b { color: var(--up); }
+
+.tabs { display: flex; gap: 0.25rem; margin-top: 0.6rem; }
+.tab {
+  flex: 1; padding: 0.6rem 0.3rem; font-weight: 600; font-size: 0.86rem;
+  color: var(--muted); border-bottom: 2px solid transparent; transition: color var(--fast), border-color var(--fast);
+}
+.tab[aria-selected="true"] { color: var(--text); border-color: var(--accent); }
+
+/* ---------- layout ---------- */
+main { padding: var(--space); max-width: 680px; margin: 0 auto; }
+.view { display: none; animation: fade var(--fast) var(--ease); }
+.view.active { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---------- hero do dia ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  border-radius: var(--radius);
+  padding: 1.3rem 1.3rem 1.4rem;
+  background:
+    radial-gradient(120% 140% at 100% 0%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 55%),
+    var(--surface);
+  border: 1px solid var(--line);
+  margin-bottom: 1.1rem;
+}
+.hero .kicker { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.hero h1 {
+  font-family: var(--font-disp); font-weight: 800; letter-spacing: -0.025em;
+  font-size: clamp(1.8rem, 1.1rem + 4vw, 2.7rem); line-height: 1.02; margin: 0.25rem 0 0.1rem;
+}
+.hero .sub { color: var(--muted); font-size: 0.9rem; }
+.hero .bar { height: 8px; border-radius: 99px; background: var(--surface-2); margin-top: 1rem; overflow: hidden; }
+.hero .bar > span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--done)); border-radius: 99px; transition: width 350ms var(--ease); }
+.hero .count { display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.8rem; color: var(--muted); }
+.hero .count b { color: var(--text); }
+
+/* ---------- card de exercício ---------- */
+.ex {
+  display: grid; grid-template-columns: 92px 1fr; gap: 0.9rem;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 0.85rem; margin-bottom: 0.85rem;
+  transition: border-color var(--fast), opacity var(--fast);
+}
+.ex.done { border-color: color-mix(in oklab, var(--done) 55%, var(--line)); }
+.ex.done .ex__media { filter: grayscale(0.2) brightness(0.85); }
+.ex__media {
+  width: 92px; height: 92px; border-radius: var(--radius-sm); overflow: hidden;
+  background: var(--surface-2); position: relative;
+}
+.ex__media img { width: 100%; height: 100%; object-fit: cover; }
+.ex__media .ph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 1.6rem; }
+.ex__body { min-width: 0; }
+.ex__head { display: flex; align-items: flex-start; gap: 0.5rem; }
+.ex__head h3 { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; }
+.ex__done-flag { margin-left: auto; color: var(--done); font-weight: 800; font-size: 1.1rem; opacity: 0; transition: opacity var(--fast); }
+.ex.done .ex__done-flag { opacity: 1; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.4rem; }
+.chip { font-size: 0.68rem; font-weight: 600; padding: 0.18rem 0.5rem; border-radius: 99px; background: var(--surface-2); color: var(--muted); }
+.chip.eq { color: var(--accent); background: color-mix(in oklab, var(--accent) 14%, transparent); }
+.ex__target { font-size: 0.82rem; color: var(--muted); margin-top: 0.5rem; }
+.ex__target b { color: var(--text); }
+.ex__nota { font-size: 0.76rem; color: var(--up); margin-top: 0.2rem; }
+
+.ex__how { font-size: 0.8rem; font-weight: 600; color: var(--accent); margin-top: 0.55rem; display: inline-flex; align-items: center; gap: 0.3rem; }
+.ex__how .arw { transition: transform var(--fast); }
+.ex__how[aria-expanded="true"] .arw { transform: rotate(90deg); }
+.ex__steps { list-style: none; margin-top: 0.5rem; display: grid; gap: 0.4rem; }
+.ex__steps[hidden] { display: none; }
+.ex__steps li { position: relative; padding-left: 1.5rem; font-size: 0.82rem; color: var(--muted); }
+.ex__steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: 0; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--surface-2); color: var(--accent); font-size: 0.66rem; font-weight: 700; display: grid; place-items: center; }
+.ex__steps { counter-reset: s; }
+
+/* sugestão de carga */
+.ex__sug {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: 0.82rem; margin-top: 0.7rem; padding: 0.5rem 0.65rem;
+  border-radius: var(--radius-sm); background: var(--surface-2); color: var(--muted);
+  border: 1px solid transparent;
+}
+.ex__sug.up { color: var(--up); border-color: color-mix(in oklab, var(--up) 40%, transparent); background: color-mix(in oklab, var(--up) 12%, var(--surface-2)); }
+.ex__sug .ic { font-size: 1rem; }
+.ex__sug b { color: inherit; font-weight: 800; }
+
+/* área de log */
+.ex__log { display: flex; align-items: flex-end; gap: 0.55rem; margin-top: 0.7rem; }
+.field { flex: 1; min-width: 0; }
+.field label { display: block; font-size: 0.68rem; font-weight: 600; color: var(--muted); margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.field input {
+  width: 100%; background: var(--bg); color: var(--text);
+  border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+  padding: 0.6rem 0.55rem; text-align: center; font-weight: 700; font-size: 1.05rem;
+  transition: border-color var(--fast);
+}
+.field input:focus { outline: none; border-color: var(--accent); }
+.field.hide { display: none; }
+
+.btn-done {
+  flex-shrink: 0; padding: 0.65rem 0.9rem; border-radius: var(--radius-sm);
+  background: var(--accent); color: var(--accent-ink); font-weight: 800; font-size: 0.9rem;
+  white-space: nowrap; transition: transform var(--fast), background var(--fast);
+}
+.btn-done:active { transform: scale(0.95); }
+.ex.done .btn-done { background: var(--surface-2); color: var(--done); }
+
+/* ---------- rodapé concluir ---------- */
+.footbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 25;
+  padding: 0.8rem var(--space) calc(0.8rem + env(safe-area-inset-bottom));
+  background: linear-gradient(transparent, var(--bg) 28%);
+}
+.footbar .inner { max-width: 680px; margin: 0 auto; }
+.btn-finish {
+  width: 100%; padding: 0.95rem; border-radius: var(--radius);
+  background: var(--surface-2); color: var(--text); font-weight: 800; font-size: 1rem;
+  border: 1px solid var(--line); transition: transform var(--fast), background var(--fast), color var(--fast);
+}
+.btn-finish.ready { background: var(--accent); color: var(--accent-ink); border-color: transparent; box-shadow: 0 8px 30px color-mix(in oklab, var(--accent) 35%, transparent); }
+.btn-finish:active { transform: scale(0.98); }
+
+/* ---------- plano (overview 7 dias) ---------- */
+.day-list { display: grid; gap: 0.7rem; }
+.day-card {
+  display: flex; align-items: center; gap: 0.8rem; text-align: left; width: 100%;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0.9rem 1rem; transition: border-color var(--fast), background var(--fast);
+}
+.day-card.current { border-color: var(--accent); background: color-mix(in oklab, var(--accent) 8%, var(--surface)); }
+.day-card .num { font-family: var(--font-disp); font-weight: 800; font-size: 1.5rem; color: var(--accent); width: 2ch; }
+.day-card .info h3 { font-size: 0.98rem; font-weight: 700; }
+.day-card .info p { font-size: 0.78rem; color: var(--muted); }
+.day-card .go { margin-left: auto; font-size: 0.74rem; font-weight: 700; color: var(--muted); }
+.day-card.current .go { color: var(--accent); }
+
+/* ---------- evolução ---------- */
+.evo { display: grid; gap: 0.7rem; }
+.evo-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.85rem 1rem; }
+.evo-card h3 { font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+.evo-card .trend { font-size: 0.78rem; font-weight: 700; margin-left: auto; }
+.evo-card .trend.up { color: var(--up); }
+.evo-card .trend.same { color: var(--muted); }
+.evo-card .hist { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.55rem; }
+.evo-card .pill { font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 99px; background: var(--surface-2); color: var(--muted); }
+.evo-card .pill:last-child { background: color-mix(in oklab, var(--accent) 16%, var(--surface-2)); color: var(--text); font-weight: 700; }
+.empty { text-align: center; color: var(--muted); padding: 3rem 1rem; font-size: 0.9rem; }
+.empty .big { font-size: 2.4rem; margin-bottom: 0.6rem; }
+
+.note { font-size: 0.78rem; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 0.7rem 0.85rem; margin-top: 1rem; }
+.note b { color: var(--accent); }
+
+/* toast */
+.toast {
+  position: fixed; left: 50%; bottom: 110px; transform: translateX(-50%) translateY(20px);
+  background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 0.88rem;
+  padding: 0.7rem 1.1rem; border-radius: 99px; opacity: 0; pointer-events: none;
+  transition: opacity var(--fast), transform var(--fast); z-index: 50; box-shadow: 0 10px 40px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.reset-link { display: block; margin: 1.5rem auto 0; text-align: center; color: var(--muted); font-size: 0.76rem; text-decoration: underline; }

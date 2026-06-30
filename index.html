@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <title>Treino — Academia</title>
+  <meta name="description" content="Seu plano de academia: exercícios com foto, registro de carga e sugestão de progressão.">
+  <meta name="theme-color" content="#1a1f2e">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Treino">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="dot"></span> TREINO
+      <span class="streak" id="streak"></span>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="hoje" aria-selected="true">Hoje</button>
+      <button class="tab" role="tab" data-tab="plano" aria-selected="false">Plano</button>
+      <button class="tab" role="tab" data-tab="evo" aria-selected="false">Evolução</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="view-hoje" class="view active" role="tabpanel"></section>
+    <section id="view-plano" class="view" role="tabpanel"></section>
+    <section id="view-evo" class="view" role="tabpanel"></section>
+  </main>
+
+  <div class="footbar" id="footbar">
+    <div class="inner">
+      <button class="btn-finish" id="finishBtn">Avançar para o próximo dia →</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

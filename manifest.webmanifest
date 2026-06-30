@@ -1,0 +1,15 @@
+{
+  "name": "Treino — Academia",
+  "short_name": "Treino",
+  "description": "Plano de academia com fotos, registro de carga e progressão.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#12161f",
+  "theme_color": "#1a1f2e",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

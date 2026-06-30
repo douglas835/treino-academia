@@ -234,3 +234,36 @@ main { padding: var(--space); max-width: 680px; margin: 0 auto; }
 .alt-info { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
 .alt-name { font-size: 0.82rem; font-weight: 600; line-height: 1.15; }
 .alt-pick { flex-shrink: 0; font-size: 0.72rem; font-weight: 800; color: var(--up); padding: 0.25rem 0.55rem; border-radius: 99px; background: color-mix(in oklab, var(--up) 14%, transparent); }
+
+/* ---------- onboarding ---------- */
+.ob { display: grid; gap: 1.1rem; }
+.ob-row { display: grid; gap: 0.5rem; }
+.ob-lbl { font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.ob-grp { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.ob-grp.col { flex-direction: column; }
+.ob-opt {
+  flex: 1; min-width: max-content; padding: 0.8rem 1rem; text-align: center;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+  font-weight: 600; font-size: 0.92rem; color: var(--muted); transition: all var(--fast);
+}
+.ob-grp.col .ob-opt { text-align: left; }
+.ob-opt.on { border-color: var(--accent); color: var(--text); background: color-mix(in oklab, var(--accent) 12%, var(--surface)); }
+.ob-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem; }
+.ob-row3 .field input { text-align: center; }
+
+/* ---------- métricas do perfil ---------- */
+.metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-bottom: 0.4rem; }
+.metric { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.9rem 1rem; display: flex; flex-direction: column; gap: 0.2rem; }
+.m-val { font-family: var(--font-disp); font-weight: 800; font-size: 1.7rem; color: var(--accent); line-height: 1; }
+.m-lbl { font-size: 0.74rem; color: var(--muted); line-height: 1.25; }
+.m-lbl i { color: var(--text); font-style: normal; font-weight: 600; }
+.sec { font-family: var(--font-disp); font-weight: 800; font-size: 1.1rem; margin: 1.6rem 0 0.7rem; }
+
+/* ---------- sync ---------- */
+.field.block { display: block; margin-bottom: 0.7rem; }
+.field.block input { text-align: left; }
+.sync-box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem; }
+.sync-status { font-size: 0.85rem; font-weight: 600; color: var(--muted); margin-bottom: 0.8rem; }
+.sync-status.on { color: var(--done); }
+.sync-actions { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.3rem; }
+.sync-off { color: var(--muted); font-size: 0.8rem; text-decoration: underline; }

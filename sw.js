@@ -1,5 +1,5 @@
-const C = "treino-v1";
-const ASSETS = ["./", "index.html", "styles.css", "data.js", "app.js", "manifest.webmanifest", "icon.svg"];
+const C = "treino-v3";
+const ASSETS = ["./", "index.html", "styles.css", "data.js", "plan.js", "sync.js", "app.js", "manifest.webmanifest", "icon.svg"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(C).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });

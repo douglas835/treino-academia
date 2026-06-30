@@ -11,10 +11,15 @@
   let hist   = LS.get("hist", {});    // { exId: [{d, w, reps}] }
   let draft  = LS.get("draft", {});   // { exId: {w, reps, done} }
   let streak = LS.get("streak", { count: 0, last: null });
+  let subs   = LS.get("subs", {});    // { exIdOriginal: exIdSubstituto }
 
-  const saveAll = () => { LS.set("cycle", cycle); LS.set("hist", hist); LS.set("draft", draft); LS.set("streak", streak); };
+  const saveAll = () => { LS.set("cycle", cycle); LS.set("hist", hist); LS.set("draft", draft); LS.set("streak", streak); LS.set("subs", subs); };
   const todayISO = () => new Date().toISOString().slice(0, 10);
   const fmt = (n) => (n == null || n === "" ? "—" : (Math.round(n * 100) / 100));
+  const ALTS = (id) => (typeof ALTERNATIVAS !== "undefined" && ALTERNATIVAS[id]) ? ALTERNATIVAS[id] : [];
+
+  // exercícios efetivos do dia atual (aplicando substituições)
+  const effList = () => PLANO[cycle].ex.map((o) => subs[o] || o);
 
   // ---------- progressão ----------
   function suggestion(id) {
@@ -65,9 +70,15 @@
   }
   function uncommit(id) { if (draft[id]) draft[id].done = false; saveAll(); }
 
+  function swap(origId, toId) {
+    if (toId === origId) delete subs[origId];
+    else subs[origId] = toId;
+    saveAll();
+    renderHoje();
+  }
+
   function finishWorkout() {
-    const day = PLANO[cycle];
-    const allDone = day.ex.every((id) => draft[id] && draft[id].done);
+    const allDone = effList().every((id) => draft[id] && draft[id].done);
     cycle = (cycle + 1) % PLANO.length;
     draft = {};
     const t = todayISO();
@@ -82,20 +93,46 @@
   function setDay(i) { cycle = i; draft = {}; saveAll(); switchTab("hoje"); render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
 
   function resetTudo() {
-    if (!confirm("Apagar TODO o histórico e recomeçar do zero?")) return;
-    ["cycle", "hist", "draft", "streak"].forEach((k) => localStorage.removeItem("gt." + k));
-    cycle = 0; hist = {}; draft = {}; streak = { count: 0, last: null };
+    if (!confirm("Apagar TODO o histórico, substituições e recomeçar do zero?")) return;
+    ["cycle", "hist", "draft", "streak", "subs"].forEach((k) => localStorage.removeItem("gt." + k));
+    cycle = 0; hist = {}; draft = {}; streak = { count: 0, last: null }; subs = {};
     switchTab("hoje"); render();
   }
 
-  // ---------- render: HOJE ----------
+  // ---------- helpers de render ----------
   function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
 
-  function cardHTML(id) {
+  function altsPanel(id, origId) {
+    const swapped = id !== origId;
+    const usados = new Set(effList());
+    const pool = (swapped ? [origId] : []).concat(ALTS(origId));
+    const opcoes = pool.filter((x, i, a) => a.indexOf(x) === i && x !== id && (x === origId || !usados.has(x)));
+    if (!opcoes.length && !swapped) return "";
+    const items = opcoes.map((optId) => {
+      const e = EXERCICIOS[optId];
+      const isOrig = optId === origId;
+      return `
+        <button class="alt" data-act="swap" data-orig="${origId}" data-to="${optId}">
+          <span class="alt-thumb"><img loading="lazy" alt="" src="${e.img}" onerror="this.style.opacity=0"></span>
+          <span class="alt-info"><span class="alt-name">${esc(e.nome)}</span><span class="chip eq">${esc(e.equip)}</span></span>
+          <span class="alt-pick">${isOrig ? "↩︎ original" : "usar"}</span>
+        </button>`;
+    }).join("");
+    return `
+      <div class="ex__altswrap">
+        <button class="ex__how ex__swap" data-act="alts" aria-expanded="false">
+          <span class="arw">▸</span> 🔄 Trocar equipamento${swapped ? ` <span class="swap-tag">trocado</span>` : ""}
+        </button>
+        <div class="ex__alts" hidden>${items}</div>
+      </div>`;
+  }
+
+  function cardHTML(id, origId) {
     const ex = EXERCICIOS[id];
     const d = ensureDraft(id);
     const sug = suggestion(id);
     const done = !!d.done;
+    const swapped = id !== origId;
     const showW = ex.tipo !== "tempo";
     const wLabel = ex.tipo === "corporal" ? "Carga +kg" : "Peso (kg)";
     const rLabel = ex.tipo === "tempo" ? "Tempo (s)" : "Reps";
@@ -106,7 +143,7 @@
     const steps = ex.como.map((p) => `<li>${esc(p)}</li>`).join("");
 
     return `
-    <article class="ex ${done ? "done" : ""}" data-id="${id}">
+    <article class="ex ${done ? "done" : ""} ${swapped ? "swapped" : ""}" data-id="${id}" data-orig="${origId}">
       <div class="ex__media">
         <span class="ph">🏋️</span>
         <img loading="lazy" alt="${esc(ex.nome)}" src="${ex.img}"
@@ -121,6 +158,7 @@
         <div class="chips">
           <span class="chip">${esc(ex.grupo)}</span>
           <span class="chip eq">${esc(ex.equip)}</span>
+          ${swapped ? `<span class="chip alt-of">no lugar de ${esc(EXERCICIOS[origId].nome)}</span>` : ""}
         </div>
         <p class="ex__target"><b>${ex.series} séries</b> • ${alvo}</p>
         ${ex.nota ? `<p class="ex__nota">↳ ${esc(ex.nota)}</p>` : ""}
@@ -129,6 +167,8 @@
           <span class="arw">▸</span> Como usar o equipamento
         </button>
         <ol class="ex__steps" hidden>${steps}</ol>
+
+        ${altsPanel(id, origId)}
 
         <div class="ex__sug ${sug.up ? "up" : ""}">
           <span class="ic">${sug.up ? "⬆️" : "💡"}</span><span>${sug.text}</span>
@@ -151,8 +191,9 @@
 
   function renderHoje() {
     const day = PLANO[cycle];
-    const total = day.ex.length;
-    const doneCount = day.ex.filter((id) => draft[id] && draft[id].done).length;
+    const eff = effList();
+    const total = eff.length;
+    const doneCount = eff.filter((id) => draft[id] && draft[id].done).length;
     const pct = Math.round((doneCount / total) * 100);
     const allDone = doneCount === total;
 
@@ -165,8 +206,8 @@
         <div class="count"><span><b>${doneCount}</b> de ${total} feitos</span><span>${pct}%</span></div>
       </section>`;
 
-    const cards = day.ex.map(cardHTML).join("");
-    const note = `<p class="note"><b>Dica:</b> a sugestão de carga fica laranja quando você bateu o alvo de reps na última vez — é a hora de subir o peso. Treinar todo dia funciona porque cada dia foca em músculos diferentes; o Dia 7 é leve de propósito.</p>`;
+    const cards = day.ex.map((origId, i) => cardHTML(eff[i], origId)).join("");
+    const note = `<p class="note"><b>Não tem o aparelho?</b> Toque em <b>🔄 Trocar equipamento</b> no exercício e escolha uma alternativa (a troca fica salva). A sugestão de carga fica laranja quando é hora de subir o peso.</p>`;
 
     document.getElementById("view-hoje").innerHTML = hero + cards + note;
 
@@ -253,10 +294,10 @@
     if (!act) return;
     const kind = act.dataset.act;
 
-    if (kind === "how") {
-      const steps = act.nextElementSibling;
-      const open = steps.hasAttribute("hidden");
-      if (open) steps.removeAttribute("hidden"); else steps.setAttribute("hidden", "");
+    if (kind === "how" || kind === "alts") {
+      const panel = act.nextElementSibling;
+      const open = panel.hasAttribute("hidden");
+      if (open) panel.removeAttribute("hidden"); else panel.setAttribute("hidden", "");
       act.setAttribute("aria-expanded", String(open));
       return;
     }
@@ -266,6 +307,7 @@
       renderHoje();
       return;
     }
+    if (kind === "swap") { swap(act.dataset.orig, act.dataset.to); return; }
     if (kind === "setday") { setDay(Number(act.dataset.i)); return; }
     if (kind === "reset") { e.preventDefault(); resetTudo(); return; }
   });

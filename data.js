@@ -371,6 +371,75 @@ const EXERCICIOS = {
       "Quadril estável, sem subir demais.",
       "Mantenha o ritmo pelo tempo alvo."
     ]
+  },
+
+  // ---------- ALTERNATIVAS (equipamento diferente, mesmo músculo) ----------
+  "supino-halteres": {
+    nome: "Supino reto com halteres", grupo: "Peito", equip: "Halteres", tipo: "carga",
+    img: IMG + "Dumbbell_Bench_Press/0.jpg", series: 4, repMin: 8, repMax: 10, inc: 2.5,
+    como: ["Deitado, um halter em cada mão na linha do peito, cotovelos abaixo dos punhos.", "Empurre para cima aproximando levemente os halteres, sem batê-los.", "Desça controlando até sentir o peito alongar."]
+  },
+  "supino-maquina": {
+    nome: "Supino na máquina (chest press)", grupo: "Peito", equip: "Máquina", tipo: "carga",
+    img: IMG + "Leverage_Chest_Press/0.jpg", series: 4, repMin: 10, repMax: 12, inc: 2.5,
+    como: ["Ajuste o banco para as alças ficarem na linha do peito.", "Empurre à frente sem travar os cotovelos com força.", "Volte controlando até sentir o peito abrir."]
+  },
+  "flexao": {
+    nome: "Flexão de braço", grupo: "Peito", equip: "Peso corporal", tipo: "corporal",
+    img: IMG + "Pushups/0.jpg", series: 3, repMin: 10, repMax: 15, inc: 0,
+    nota: "Apoie os joelhos no chão se ainda for difícil.",
+    como: ["Mãos um pouco mais largas que os ombros, corpo reto (não deixe o quadril cair).", "Desça até o peito chegar perto do chão.", "Empurre de volta contraindo o peito."]
+  },
+  "triceps-frances": {
+    nome: "Tríceps francês (halter)", grupo: "Tríceps", equip: "Halteres", tipo: "carga",
+    img: IMG + "Seated_Triceps_Press/0.jpg", series: 3, repMin: 10, repMax: 12, inc: 2.5,
+    como: ["Sentado, segure um halter com as duas mãos acima da cabeça.", "Desça flexionando só os cotovelos, atrás da nuca.", "Estenda de volta. Cotovelos apontados para o teto, fixos."]
+  },
+  "remada-halter": {
+    nome: "Remada unilateral (serrote)", grupo: "Costas", equip: "Halteres", tipo: "carga",
+    img: IMG + "One-Arm_Dumbbell_Row/0.jpg", series: 4, repMin: 10, repMax: 12, inc: 2.5,
+    nota: "Reps por braço.",
+    como: ["Apoie joelho e mão no banco, costas retas e paralelas ao chão.", "Puxe o halter até a cintura, cotovelo rente ao corpo.", "Desça alongando. Não gire o tronco para 'roubar'."]
+  },
+  "rosca-halteres": {
+    nome: "Rosca alternada com halteres", grupo: "Bíceps", equip: "Halteres", tipo: "carga",
+    img: IMG + "Dumbbell_Alternate_Bicep_Curl/0.jpg", series: 3, repMin: 10, repMax: 12, inc: 2,
+    como: ["Halteres ao lado do corpo, palmas para dentro.", "Suba um braço por vez girando a palma para cima no meio do movimento.", "Desça controlando. Cotovelos colados ao tronco."]
+  },
+  "rosca-scott": {
+    nome: "Rosca scott (banco)", grupo: "Bíceps", equip: "Banco Scott", tipo: "carga",
+    img: IMG + "Preacher_Curl/0.jpg", series: 3, repMin: 10, repMax: 12, inc: 2.5,
+    como: ["Braços apoiados no banco inclinado, axilas na borda.", "Suba a barra contraindo o bíceps.", "Desça quase estendendo, sem travar o cotovelo de forma brusca."]
+  },
+  "agachamento-halter": {
+    nome: "Agachamento goblet (halter)", grupo: "Pernas", equip: "Halter", tipo: "carga",
+    img: IMG + "Goblet_Squat/0.jpg", series: 3, repMin: 10, repMax: 12, inc: 2.5,
+    como: ["Segure um halter junto ao peito com as duas mãos.", "Agache empurrando o quadril para trás, peito erguido, até a coxa paralela.", "Suba empurrando o chão pelo meio do pé."]
+  },
+  "desenvolvimento-maquina": {
+    nome: "Desenvolvimento na máquina", grupo: "Ombros", equip: "Máquina", tipo: "carga",
+    img: IMG + "Machine_Shoulder_Military_Press/0.jpg", series: 3, repMin: 10, repMax: 12, inc: 2.5,
+    como: ["Ajuste o banco para as alças ficarem na linha dos ombros.", "Empurre para cima sem travar os cotovelos.", "Volte controlando até a altura dos ombros."]
+  },
+  "cadeira-flexora-sentado": {
+    nome: "Cadeira flexora sentado", grupo: "Pernas", equip: "Máquina", tipo: "carga",
+    img: IMG + "Seated_Leg_Curl/0.jpg", series: 3, repMin: 12, repMax: 15, inc: 2.5,
+    como: ["Rolo apoiado sobre o tornozelo, encosto travando as coxas.", "Flexione os joelhos trazendo o rolo para baixo.", "Volte controlando, sem deixar o peso bater."]
+  },
+  "abdominal-maquina": {
+    nome: "Abdominal na polia (cable crunch)", grupo: "Abdômen", equip: "Polia", tipo: "carga",
+    img: IMG + "Cable_Crunch/0.jpg", series: 3, repMin: 12, repMax: 15, inc: 2.5,
+    como: ["Ajoelhado de frente para a polia alta, corda ao lado da cabeça.", "Encurve o tronco para baixo contraindo o abdômen (não puxe com os braços).", "Volte controlando até alongar."]
+  },
+  "crucifixo-inverso-maquina": {
+    nome: "Crucifixo inverso na máquina", grupo: "Ombros", equip: "Máquina", tipo: "carga",
+    img: IMG + "Reverse_Machine_Flyes/0.jpg", series: 3, repMin: 12, repMax: 15, inc: 2.5,
+    como: ["Peito apoiado no encosto, segure as alças à frente.", "Abra os braços para trás apertando a parte de trás dos ombros.", "Volte controlando. Carga leve, foco na contração."]
+  },
+  "panturrilha-leg": {
+    nome: "Panturrilha no leg press", grupo: "Pernas", equip: "Máquina", tipo: "carga",
+    img: IMG + "Calf_Press_On_The_Leg_Press_Machine/0.jpg", series: 4, repMin: 15, repMax: 20, inc: 5,
+    como: ["Pontas dos pés na base da plataforma, joelhos quase estendidos.", "Empurre com as pontas dos pés ao máximo, contraindo a panturrilha.", "Volte controlando até sentir o alongamento."]
   }
 };
 
@@ -384,3 +453,39 @@ const PLANO = [
   { nome: "Inferior + Panturrilha", foco: "Pernas e glúteos", ex: ["agachamento","afundo","mesa-flexora","cadeira-extensora","panturrilha-sentado","panturrilha-pe"] },
   { nome: "Recuperação ativa", foco: "Core + cardio leve", ex: ["prancha","russian-twist","abdominal-supra","elevacao-pernas","mountain-climber","face-pull"] }
 ];
+
+// Substituições: se a academia não tiver o aparelho, troque por um destes (mesmo músculo).
+const ALTERNATIVAS = {
+  "supino-reto": ["supino-halteres", "supino-maquina", "crucifixo-maquina", "flexao"],
+  "supino-inclinado": ["supino-reto", "supino-halteres", "supino-maquina", "crucifixo-maquina"],
+  "crucifixo-maquina": ["crossover", "supino-halteres", "supino-inclinado"],
+  "crossover": ["crucifixo-maquina", "supino-halteres"],
+  "triceps-corda": ["triceps-testa", "triceps-frances", "mergulho"],
+  "triceps-testa": ["triceps-corda", "triceps-frances"],
+  "mergulho": ["triceps-corda", "triceps-testa", "flexao"],
+  "puxada-alta": ["barra-fixa", "remada-baixa", "remada-halter"],
+  "barra-fixa": ["puxada-alta", "remada-baixa", "remada-halter"],
+  "remada-curvada": ["remada-baixa", "remada-halter", "puxada-alta"],
+  "remada-baixa": ["remada-curvada", "remada-halter", "puxada-alta"],
+  "rosca-direta": ["rosca-halteres", "rosca-scott", "rosca-martelo"],
+  "rosca-martelo": ["rosca-direta", "rosca-halteres"],
+  "agachamento": ["leg-press", "agachamento-halter"],
+  "leg-press": ["agachamento", "agachamento-halter", "afundo"],
+  "cadeira-extensora": ["leg-press", "agachamento-halter"],
+  "mesa-flexora": ["cadeira-flexora-sentado", "stiff"],
+  "stiff": ["mesa-flexora", "cadeira-flexora-sentado"],
+  "afundo": ["leg-press", "agachamento-halter", "agachamento"],
+  "panturrilha-pe": ["panturrilha-sentado", "panturrilha-leg"],
+  "panturrilha-sentado": ["panturrilha-pe", "panturrilha-leg"],
+  "desenvolvimento": ["desenvolvimento-halter", "desenvolvimento-maquina"],
+  "desenvolvimento-halter": ["desenvolvimento", "desenvolvimento-maquina"],
+  "elevacao-lateral": ["elevacao-frontal", "desenvolvimento-halter"],
+  "elevacao-frontal": ["elevacao-lateral", "desenvolvimento-halter"],
+  "crucifixo-inverso": ["crucifixo-inverso-maquina", "face-pull"],
+  "face-pull": ["crucifixo-inverso", "crucifixo-inverso-maquina"],
+  "abdominal-supra": ["abdominal-maquina", "elevacao-pernas", "russian-twist"],
+  "elevacao-pernas": ["abdominal-supra", "abdominal-maquina", "russian-twist"],
+  "prancha": ["abdominal-supra", "mountain-climber"],
+  "russian-twist": ["abdominal-supra", "prancha"],
+  "mountain-climber": ["prancha", "abdominal-supra"]
+};
